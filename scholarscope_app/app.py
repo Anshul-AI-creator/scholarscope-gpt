@@ -9,8 +9,8 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Constants
-MAX_FILES = 3
-MAX_WORDS = 10000
+MAX_FILES_FREE = 3
+MAX_WORDS_FREE = 10000
 CHUNK_WORDS = 1500
 
 # 🎨 UI Header
@@ -22,6 +22,11 @@ st.markdown("""
 - 🔍 Bullet-point summaries
 - 💡 Project ideas you can build
 """)
+
+# 🎛️ Sidebar
+st.sidebar.markdown("### 🧠 Scholar Settings")
+model_choice = st.sidebar.selectbox("Choose GPT Model", ["gpt-3.5-turbo", "gpt-4"])
+model = model_choice.strip()
 
 # 📄 File Upload
 st.divider()
@@ -43,8 +48,8 @@ Text:
 
 # 🤩 Processing and Display
 if uploaded_files:
-    if len(uploaded_files) > MAX_FILES:
-        st.error("❌ Please upload 3 files or fewer.")
+    if len(uploaded_files) > MAX_FILES_FREE:
+        st.error("❌ Only 3 files allowed at once.")
     else:
         total_text = ""
         for file in uploaded_files:
@@ -57,9 +62,9 @@ if uploaded_files:
                 total_text += file.read().decode("utf-8")
 
         word_count = len(total_text.split())
-        if word_count > MAX_WORDS:
+        if word_count > MAX_WORDS_FREE:
             st.warning("⚠️ Truncating to 10,000 words.")
-            total_text = " ".join(total_text.split()[:MAX_WORDS])
+            total_text = " ".join(total_text.split()[:MAX_WORDS_FREE])
 
         final_prompt = prompt_template.format(total_text)
 
@@ -72,8 +77,8 @@ if uploaded_files:
                 st.info(f"Processing chunk {i+1}/{len(chunks)}")
                 prompt = prompt_template.format(chunk)
                 try:
-                    response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",
+                    response = openai.chat.completions.create(
+                        model=model,
                         messages=[
                             {"role": "system", "content": "You are a helpful academic tutor."},
                             {"role": "user", "content": prompt}
