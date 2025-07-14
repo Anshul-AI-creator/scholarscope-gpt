@@ -1,0 +1,12 @@
+prompt_template = """
+You are a helpful academic tutor.
+
+A student has uploaded a research paper and is feeling overwhelmed. Your job is to:
+
+1. Summarize the following excerpt in plain English.
+2. Make the summary short and broken into clear bullet points.
+3. Then suggest one realistic, beginner-friendly project idea related to the research.
+
+Text:
+{}
+"""

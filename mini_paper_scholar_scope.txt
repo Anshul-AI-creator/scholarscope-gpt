@@ -1,0 +1,19 @@
+
+Title: Efficient Transformer Architectures for Low-Resource NLP
+
+Abstract:
+This paper presents a lightweight transformer model designed for low-resource natural language processing (NLP) tasks. By incorporating sparse attention mechanisms and dynamic token pruning, the model significantly reduces memory and computational requirements while maintaining competitive performance on benchmark datasets.
+
+Introduction:
+Traditional transformer models are computationally expensive and often impractical for deployment on edge devices or in low-resource environments. We introduce LiteTransformer, a variant of the transformer architecture that uses sparsity and pruning to optimize performance. Experiments on sentiment classification and named entity recognition demonstrate that LiteTransformer achieves over 30% speedup with minimal accuracy loss.
+
+Methodology:
+Our approach modifies the self-attention mechanism to consider only a subset of token interactions, selected dynamically during training. This sparse attention reduces complexity from O(n^2) to O(n log n). Additionally, we prune low-importance tokens during forward passes, further reducing computation.
+
+Results:
+LiteTransformer was evaluated on the SST-2 and CoNLL-2003 datasets. It achieved an F1 score within 1.5 points of full transformers while reducing inference time by 35% on average.
+
+Conclusion:
+LiteTransformer provides a practical trade-off between performance and efficiency for low-resource NLP applications. Its modular design enables adaptation to a variety of tasks with minimal tuning.
+
+Keywords: Transformer, NLP, Low-resource, Sparse Attention, Token Pruning
